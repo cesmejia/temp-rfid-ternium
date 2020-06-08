@@ -19,4 +19,4 @@ const setTempStatus = (value) => {
     }
 }
 
-module.exports = setTempStatus;
+export default setTempStatus;

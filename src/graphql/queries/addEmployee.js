@@ -3,7 +3,8 @@ const variables = require("../../fakeEnv.json");
 const companyId = process.env.COMPANY_ID || variables.COMPANY_ID;
 const companyName = process.env.COMPANY_NAME || variables.COMPANY_NAME;
 
-const addEmployee = (rfid) => {
+const addEmployee = (obj) => {
+  const {rfid, firstName, dadSurname, momSurname} = obj;
 
   return new Promise((resolve, reject) => {
      axe({
@@ -13,9 +14,9 @@ const addEmployee = (rfid) => {
           mutation{
               addEmployee(
                     rfid:"${rfid}",
-                    firstName: "Anonimo", 
-                    dadSurname: "X", 
-                    momSurname: "Y", 
+                    firstName: "${firstName}", 
+                    dadSurname: "${dadSurname}", 
+                    momSurname: "${momSurname}", 
                     companyName: "${companyName}", 
                     companyId: "${companyId}" 
               ){
@@ -31,19 +32,6 @@ const addEmployee = (rfid) => {
           }
       }).catch( e=>{
           reject(e);
-          console.log(`
-            mutation{
-                addEmployee(
-                      rfid:"${rfid}",
-                      firstName: "Anonimo", 
-                      dadSurname: "X", 
-                      momSurname: "Y", 
-                      companyName: "${companyName}", 
-                      companyId: "${companyId}" 
-                ){
-                  employeeId
-                }
-              }`)
       })
   });
 }

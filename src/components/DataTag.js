@@ -14,8 +14,8 @@ const DataTag = ({myInput, user, clean, toggleFocus}) => {
           </Grid>
 
           <Grid item xs={6} sm={6} style={{marginLeft:"20px",marginRight:"-20px", display:"flex"}} >
-            <TextField id="outlined-basic" disabled value={user.fN} style={{margin:5}} label="Nombre" inputProps={{style: {fontSize: "1.50rem"} }} />
-            <TextField id="outlined-basic" disabled value="CUPRUM" style={{margin:5}} label="Empresa"  inputProps={{style: {fontSize: "1.50rem"} }}/>
+            <TextField id="outlined-basic" disabled value={user} style={{margin:5}} label="Nombre" inputProps={{style: {fontSize: "1.50rem"} }} />
+            <TextField id="outlined-basic" disabled value="Ternium" style={{margin:5}} label="Empresa"  inputProps={{style: {fontSize: "1.50rem"} }}/>
           </Grid>
 
 
