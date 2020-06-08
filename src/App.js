@@ -173,6 +173,7 @@ function App() {
     myInput.current.value = "";
     dictionary = {};
     setUser("")
+    myInput.current.focus()
     // setTempStatus(false)
   };
 
