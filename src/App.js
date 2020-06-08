@@ -3,21 +3,14 @@ import { Grid, Snackbar } from "@material-ui/core";
 import TempCard from "./components/TempCard";
 import DataTag from "./components/DataTag";
 import MuiAlert from '@material-ui/lab/Alert';
-import { NEW_EMPLOYEE, newTempDocument} from "./graphql/queries";
-import { useMutation } from "@apollo/react-hooks";
+import { addEmployee, getEmployee, newTempDocument } from "./graphql/queries/index";
 import io from "socket.io-client";
 import setTempStatus from "./helpers/tempStatus";
 const socket = io("http://localhost:8080");
-// const sendToPrint = require("./helpers/sendToPrint");
-const getEmployee = require("./helpers/getEmployeeByRfid");
-const variables = require("./fakeEnv.json");
+
 
 let dict = {}, dictionary = {};
 let once = true, listening = true, lock = true;
-
-dict.companyId = process.env.COMPANY_ID || variables.COMPANY_ID;
-dict.companyName = process.env.COMPANY_NAME || variables.COMPANY_NAME; 
-dictionary = {...dict};
 
 function App() {
   const myInput = useRef("");
@@ -26,28 +19,29 @@ function App() {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState({cN:"", fN:""});
 
-  const [addEmployee] = useMutation(NEW_EMPLOYEE,{
-    onError: err =>{
+  // const [addEmployee] = useMutation(NEW_EMPLOYEE,{
+  const onErrorAE = err => {
       console.log({message:`addEmployee ${err.message}`});
-    }, 
-    onCompleted: adata => {
+  };
+  const onCompletedAE = adata => {
       dictionary.employeeId = adata.addEmployee.employeeId;
       setUser({cN:"Cuprum", fN: "Anonimo XYZ"});
       console.log({message:`Employee Added`});
-    }
-  });
+  };
   
 
   // const [getEmployee, query] = useLazyQuery(SEARCH_EMPLOYEE,{
-  const onError =  err => {
+  const onErrorGE =  err => {
       console.log("Inside query Error...")
       console.log({message:`getEmployee ${err.message}`});
-      lock && addEmployee({ variables: { rfid: myInput.current.value }});
+      lock && addEmployee(myInput.current.value)  
+          .then( data => onCompletedAE(data) )
+          .catch( err => onErrorAE(err) );
+
       dictionary.fullName = "Anonimo X Y";
       dictionary.rfid = myInput.current.value;
     };
-  const onCompleted = cdata => {
-      console.log({cdata})
+  const onCompletedGE = cdata => {
       const { _id, companyName, rfid, fullName } = cdata.getEmployeeByRfid;
       setUser({cN:companyName, fN: fullName});
       console.log({message:`Employee Found`});
@@ -55,24 +49,16 @@ function App() {
       setMessage("Acerque su frente al sensor por 3 segundos");
       dictionary.employeeId = _id;
       dictionary.rfid = rfid;
-      dictionary.companyName = companyName;
   };
 
 
-  const [newTemp] = useMutation(newTempDocument,{    
-    onError: err => {
+  // const [newTemp] = useMutation(newTempDocument,{    
+  const onErrorNT = err => {
       console.log({message:`newTemp ${err.message}`});
-      // let {temperature, companyName, rfid} = dictionary;
-      // const fullName = "Anonimo X Y"
-      // sendToPrint({temperature, fullName, companyName, rfid, date:Date().slice(0,15)});
-    },
-    onCompleted: tdata => {
-      // const {rfid,temperature, companyName} = dictionary;
-      // (rfid && companyName) && sendToPrint({ rfid, temperature, companyName,fullName: (query.data.getEmployeeByRfid.fullName || "Anonimo X Y" ), date: Date().slice(0,15) }); //use user instead of query
+    };
+  const onCompletedNT =  tdata => {
       console.log("ALLLLLLL DONNNNEEEE");
     }
-  });
-  
   
   
   const capturing = temp => {
@@ -85,7 +71,9 @@ function App() {
             : setTemp({temp, sensorID:1});
         dictionary.temperature = temp;
         console.log({check:dictionary})
-        newTemp({ variables:{ ...dictionary }});
+        newTempDocument( dictionary )
+            .then( data => onCompletedNT(data) )
+            .catch( er => onErrorNT(er) );
         
         setTimeout(() => {
           setTemp({temp:null, sensorID:null});
@@ -117,10 +105,10 @@ function App() {
     if (e.key === "Enter" && value !== "" && !myInput.current.disabled) {
       setMessage("Acerque su frente al sensor por 3 segundos");
       lock=true;
-      // getEmployee({ variables: { rfid: value }, fetchPolicy: 'network-only' });
+
       getEmployee(value)
-        .then( data => onCompleted(data))
-        .catch( e => onError(e));
+        .then( data => onCompletedGE(data))
+        .catch( e => onErrorGE(e));
 
       dictionary.rfid = value;
       console.log("enter");
@@ -133,7 +121,7 @@ function App() {
     console.log("Running clean...")
     myInput.current.disabled = false;
     myInput.current.value = "";
-    dictionary = {...dict};
+    dictionary = {};
     setUser({cN:"", fN:""})
     setTempStatus(false)
   };
@@ -145,7 +133,6 @@ function App() {
 
   const makeErrAndClean = () => {
     lock = false;
-    // getEmployee({ variables: {  } });
     clean();
     setMessage("Ingrese tarjeta o acerque su frente al sensor por 3 segundos");
     myInput.current.focus()
