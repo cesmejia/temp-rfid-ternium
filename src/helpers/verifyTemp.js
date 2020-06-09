@@ -22,4 +22,4 @@ const verifyTempDocument = (dict) => {
   }
 };
 
-module.exports = verifyTempDocument;
+export default verifyTempDocument;

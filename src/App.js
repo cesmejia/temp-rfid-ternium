@@ -3,10 +3,11 @@ import { Grid, Snackbar } from "@material-ui/core";
 import TempCard from "./components/TempCard";
 import DataTag from "./components/DataTag";
 import MuiAlert from '@material-ui/lab/Alert';
-import { addEmployee, getEmployee, newTempDocument, getToken, requestEmployee } from "./graphql/queries/index";
+import imports from "./graphql/queries/index";
 import io from "socket.io-client";
 const socket = io("http://localhost:8080");
 
+const { addEmployee, getEmployee, newTempDocument, getToken, requestEmployee } = imports;
 
 let dictionary = {};
 let once = true, listening = true;

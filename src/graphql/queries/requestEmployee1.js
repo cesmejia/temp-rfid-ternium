@@ -1,6 +1,6 @@
-const axios = require("axios");
-const getToken = require("./getToken");
-const qs = require("qs");
+import axios from "axios";
+import getToken from "./getToken";
+import qs from "qs";
 
 const two =
   "https://www.novaservicios.com.mx/nova/hcn/SaludOcupacional/Api/SistemaMedio/Trabajador/ConsultaPorCredencial";

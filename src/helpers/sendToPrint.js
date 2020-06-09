@@ -17,4 +17,4 @@ const sendToPrint = (values) => {
     }
 }
 
-module.exports = sendToPrint;
+export default sendToPrint;

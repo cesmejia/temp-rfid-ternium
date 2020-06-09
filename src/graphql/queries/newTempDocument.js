@@ -1,5 +1,5 @@
-const axe = require("../axiosCom");
-const variables = require("../../fakeEnv.json");
+import axe from "../axiosCom";
+import variables from "../../fakeEnv.json";
 const companyId = process.env.COMPANY_ID || variables.COMPANY_ID;
 const companyName = process.env.COMPANY_NAME || variables.COMPANY_NAME;
 
@@ -48,4 +48,4 @@ const newTempDocument  = (obj) => {
     });
 }
 
-module.exports = newTempDocument;
+export default newTempDocument;

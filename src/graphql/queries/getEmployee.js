@@ -1,4 +1,4 @@
-const axe = require("../axiosCom");
+import axe from "../axiosCom";
 
 const getEmployeeByRfid = (rfid) => {
 
@@ -29,4 +29,4 @@ const getEmployeeByRfid = (rfid) => {
   });
 }
 
-module.exports = getEmployeeByRfid;
+export default getEmployeeByRfid;

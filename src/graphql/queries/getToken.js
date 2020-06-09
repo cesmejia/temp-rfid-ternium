@@ -1,4 +1,4 @@
-const axe = require("../axiosCom");
+import axe from "../axiosCom";
 
 const getTerniumToken = () => {
   return new Promise((resolve, reject) => {
@@ -26,4 +26,4 @@ const getTerniumToken = () => {
 };
 
 
-module.exports = getTerniumToken;
+export default getTerniumToken;

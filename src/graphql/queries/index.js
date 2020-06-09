@@ -1,13 +1,15 @@
-const addEmployee = require('./addEmployee');
-const getEmployee = require('./getEmployee');
-const newTempDocument = require('./newTempDocument');
-const getToken = require('./getToken');
-const requestEmployee = require('./requestEmployee2');
+import addEmployee from './addEmployee';
+import getEmployee from './getEmployee';
+import newTempDocument from './newTempDocument';
+import getToken from './getToken';
+import requestEmployee from './requestEmployee2';
 
-module.exports = {
+const allImports ={
     addEmployee,
-    getEmployee,
-    newTempDocument,
-    getToken,
+    getEmployee, 
+    newTempDocument,  
+    getToken, 
     requestEmployee
 }
+
+export default allImports
