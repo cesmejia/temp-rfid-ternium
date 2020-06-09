@@ -4,7 +4,7 @@ const token = process.env.TOKEN || variables.TOKEN;
 
 const instance = axios.create({
     // url: "https://okku.herokuapp.com/",
-    url: "http://localhost:4000/",
+    url: "https://okku.herokuapp.com/",
     headers: {"authorization":`Bearer ${token}`}
 });
 
