@@ -22,7 +22,7 @@ getToken()
 
 function App() {
   const myInput = useRef("");
-  const [postTemp, setTemp] = useState();
+  const [postTemp, setTemp] = useState({temp:30});
   const [message, setMessage] = useState("Ingrese tarjeta o acerque su frente al sensor por 3 segundos");
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
@@ -96,7 +96,7 @@ function App() {
           .then( data => onCompletedAE(data) )
           .catch( err => onErrorAE(err) );
       dictionary.fullName = val.Nombre;
-      setUser(val.Nombre);
+      setUser(`${val.Nombre} ${val.Paterno} ${val.Materno}`);
       console.log({re:val});
     }
   

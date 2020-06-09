@@ -1,5 +1,4 @@
 import axios from "axios";
-import getToken from "./getToken";
 import qs from "qs";
 
 const two =
