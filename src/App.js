@@ -22,7 +22,7 @@ getToken()
 
 function App() {
   const myInput = useRef("");
-  const [postTemp, setTemp] = useState({temp:30});
+  const [postTemp, setTemp] = useState();
   const [message, setMessage] = useState("Ingrese tarjeta o acerque su frente al sensor por 3 segundos");
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
