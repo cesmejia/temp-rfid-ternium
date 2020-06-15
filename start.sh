@@ -13,7 +13,8 @@ cd /home/pi/Documents/totemp_ter/temp-rfid-ternium
 # lxterminal -e "npm run start" &
 lxterminal -e "serve -s build -l 3000" &
 
-chromium-browser --kiosk --app=http://localhost:3000
+sleep 5
+chromium-browser --check-for-update-interval=1 --simulate-critical-update --kiosk --app=http://localhost:3000
 
 # When Installing or updating, give this file permissions on (Copy & paste on Terminal) with:
 # chmod a+rx start.sh
