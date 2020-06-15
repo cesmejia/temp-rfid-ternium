@@ -25,11 +25,14 @@ let status = <h1 style={{textAlign:"center", fontSize:"4vw", margin:0}}>{message
     }
 
     return (
-      <Grid item xs={12} style={{textAlign:"start", padding:6, height:"80vh"}}>
-        <Paper style={{ height:"100%", backgroundColor: bkc, color:"white", justifyContent: "center", display: "flex", alignItems: "center", padding:25 }}>
-          {status}
-        </Paper>
-      </Grid>
+      <>
+        <div style={{position: "absolute", right: 14,	padding: "6vh 6vw", fontWeight:"bolder", fontSize:28, opacity:0.35, color:"white" }}>TERNIUM</div>
+        <Grid item xs={12} style={{textAlign:"start", padding:6, height:"80vh"}}>
+          <Paper style={{ height:"100%", backgroundColor: bkc, color:"white", justifyContent: "center", display: "flex", alignItems: "center", padding:25 }}>
+            {status}
+          </Paper>
+        </Grid>
+      </>
     )
 }
  
