@@ -26,11 +26,6 @@ const requestEmployee = (idNmb, token) => {
   })
 };  
 
-// requestEmployee("404079")
-//   .then(e => {console.log({e})})
-//   .catch(e => {console.log(e)})
-
-
 export default requestEmployee
 
 

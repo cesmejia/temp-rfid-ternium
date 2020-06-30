@@ -4,7 +4,22 @@ const companyId = process.env.COMPANY_ID || variables.COMPANY_ID;
 const companyName = process.env.COMPANY_NAME || variables.COMPANY_NAME;
 
 const addEmployee = (obj) => {
-  const {rfid, firstName, dadSurname, momSurname} = obj;
+  const {rfid, firstName, dadSurname, momSurname, gender, birthday, outsourcedEmployee, companyEmployeeId} = obj;
+  
+  let gen = gender;
+  switch (gen) {
+    case "M":
+      gen = "Masculino"
+      break;
+    case "F":
+      gen = "Femenino"
+      break;
+    case null:
+      gen = null
+      break;
+    default:
+      gen = null
+  }
 
   return new Promise((resolve, reject) => {
      axe({
@@ -18,7 +33,11 @@ const addEmployee = (obj) => {
                     dadSurname: "${dadSurname}", 
                     momSurname: "${momSurname}", 
                     companyName: "${companyName}", 
-                    companyId: "${companyId}" 
+                    companyId: "${companyId}",
+                    gender: "${gen}",
+                    birthday: ${birthday},
+                    outsourcedEmployee: ${outsourcedEmployee},
+                    companyEmployeeId: "${companyEmployeeId}",
               ){
                 employeeId
               }

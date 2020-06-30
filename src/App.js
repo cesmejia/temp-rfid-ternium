@@ -90,7 +90,11 @@ function App() {
         momSurname: val.Materno,
         dadSurname: val.Paterno,
         rfid: val.NumeroTarjeta,
-        firstName: val.Nombre
+        firstName: val.Nombre,
+        birthday: val.FechaNacimiento, 
+        outsourcedEmployee: !val.Propio,
+        companyEmployeeId: val.NumeroTernium, 
+        gender: val.Genero 
       }
       addEmployee(user)  
           .then( data => onCompletedAE(data) )
@@ -118,7 +122,7 @@ function App() {
         setTimeout(() => {
           setTemp({temp:null, sensorID:null});
           listening = true;  once = true;
-          makeErrAndClean(); // Try to fix error
+          makeErrAndClean(); 
         }, 4000 ); // how long will the temperature show
 
       }, 3000); // how long will the mode listen
@@ -142,13 +146,7 @@ function App() {
 
     
     socket.on("status", (data) => {
-
-      if(listening){
-        // setOpen(true);
-        setMessage("Gracias! Registrando...");
-        // capturing(data.temp);
-      }
-
+      if(listening){  setMessage("Gracias! Registrando..."); }
     });
 
 
@@ -164,7 +162,6 @@ function App() {
       dictionary.rfid = value;
       console.log("enter");
       myInput.current.disabled = true; 
-      // setTempStatus(true);
     }
   };
 
