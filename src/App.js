@@ -11,7 +11,7 @@ const { addEmployee, getEmployee, newTempDocument, getToken, requestEmployee } =
 
 let dictionary = {};
 let once = true, listening = true;
-let token, count = 0;
+let token, gen, count = 0;
 
 getToken()
   .then( data => { 
@@ -86,6 +86,21 @@ function App() {
       }
     };
   const onCompletedRE =  val => {
+
+    switch (val.Genero) {
+      case "M":
+        gen = "Masculino"
+        break;
+      case "F":
+        gen = "Femenino"
+        break;
+      case null:
+        gen = null
+        break;
+      default:
+        gen = null
+    }
+  
       const user = {
         momSurname: val.Materno,
         dadSurname: val.Paterno,
@@ -94,7 +109,7 @@ function App() {
         birthday: val.FechaNacimiento, 
         outsourcedEmployee: !val.Propio,
         companyEmployeeId: val.NumeroTernium, 
-        gender: val.Genero 
+        gender: gen
       }
       addEmployee(user)  
           .then( data => onCompletedAE(data) )
