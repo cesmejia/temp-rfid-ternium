@@ -116,7 +116,6 @@ function App() {
           .catch( err => onErrorAE(err) );
       dictionary.fullName = val.Nombre;
       setUser(`${val.Nombre} ${val.Paterno} ${val.Materno}`);
-      console.log({re:val});
     }
   
   

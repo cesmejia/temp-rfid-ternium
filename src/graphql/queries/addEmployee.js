@@ -29,11 +29,8 @@ const addEmployee = (obj) => {
               employeeId
             }
           }`;
-
     return Oto + rri + no + larin + gologo
   }
-
-console.log(qwery())
 
   return new Promise((resolve, reject) => {
      axe({
