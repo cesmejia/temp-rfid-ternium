@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Grid, Snackbar } from "@material-ui/core";
 import TempCard from "./components/TempCard";
 import DataTag from "./components/DataTag";
@@ -86,21 +86,6 @@ function App() {
       }
     };
   const onCompletedRE =  val => {
-
-    switch (val.Genero) {
-      case "M":
-        gen = "Masculino"
-        break;
-      case "F":
-        gen = "Femenino"
-        break;
-      case null:
-        gen = null
-        break;
-      default:
-        gen = null
-    }
-  
       const user = {
         momSurname: val.Materno,
         dadSurname: val.Paterno,
@@ -109,7 +94,7 @@ function App() {
         birthday: val.FechaNacimiento, 
         outsourcedEmployee: !val.Propio,
         companyEmployeeId: val.NumeroTernium, 
-        gender: gen
+        gender: val.Genero
       }
       addEmployee(user)  
           .then( data => onCompletedAE(data) )
@@ -124,19 +109,21 @@ function App() {
       setTimeout(()=>{
         setMessage("...");
         listening = false;
-        (temp === 0) 
-            ? setMessage("Temperatura fuera de Rango, favor de volver a tomar la lectura")
-            : setTemp({temp, sensorID:1});
-        dictionary.temperature = temp;
-        console.log({check:dictionary})
+        if(temp === 0){
+          setMessage("Temperatura fuera de Rango, favor de volver a tomar la lectura")
+        }
+        else{
+          setTemp({temp, sensorID:1});
+          dictionary.temperature = temp;
+        }
         newTempDocument( dictionary )
             .then( data => onCompletedNT(data) )
             .catch( er => onErrorNT(er) );
-        
+
         setTimeout(() => {
           setTemp({temp:null, sensorID:null});
           listening = true;  once = true;
-          makeErrAndClean(); 
+          clean(); 
         }, 4000 ); // how long will the temperature show
 
       }, 3000); // how long will the mode listen
@@ -144,20 +131,15 @@ function App() {
     };
   };
   
-    useEffect(() => {
-      socket.on("temp", (data) => {
-  
-        if(listening){
-          setTemp({temp:"Reading", sensorID:null});
-          console.log("Reading..");
-          setOpen(true);
-          // setMessage("Gracias! Registrando...");
-          capturing(data.temp);
-        }
-  
-      });
-    }, []);
-
+    socket.on("temp", (data) => {
+      if(listening){
+        setTemp({temp:"Reading", sensorID:null});
+        console.log("Reading..");
+        setOpen(true);
+        setMessage("Gracias! Registrando...");
+        capturing(data.temp);
+      }
+    });
     
     socket.on("status", (data) => {
       if(listening){  setMessage("Gracias! Registrando..."); }
@@ -185,8 +167,8 @@ function App() {
     myInput.current.value = "";
     dictionary = {};
     setUser("")
+    setMessage("Ingrese tarjeta o acerque su frente al sensor por 3 segundos");
     myInput.current.focus()
-    // setTempStatus(false)
   };
 
   const handleClose = (event, reason) => {
@@ -194,19 +176,13 @@ function App() {
     setOpen(false); setOpen2(false);
   };
 
-  const makeErrAndClean = () => {
-    clean();
-    setMessage("Ingrese tarjeta o acerque su frente al sensor por 3 segundos");
-    myInput.current.focus()
-  };
 
-  
   const handleFocus = () => myInput.current.focus();
   return (
     <div className="App" onMouseMove={handleFocus} onKeyUp={enter} onClick={handleFocus} >
       <Grid container  direction="row" style={{ height:"100vh", position: "fixed" }} >
         <TempCard data={postTemp} message={message} />
-        <DataTag myInput={myInput} user={user} clean={makeErrAndClean}/>
+        <DataTag myInput={myInput} user={user} clean={clean}/>
         
         <Snackbar open={open} autoHideDuration={2700} onClose={handleClose}  anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
             <MuiAlert elevation={6} variant="filled" onClose={handleClose} severity="info">

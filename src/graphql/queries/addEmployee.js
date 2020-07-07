@@ -2,9 +2,24 @@ import axe from "../axiosCom";
 import variables from "../../fakeEnv.json";
 const companyId = process.env.COMPANY_ID || variables.COMPANY_ID;
 const companyName = process.env.COMPANY_NAME || variables.COMPANY_NAME;
+let gen;
 
 const addEmployee = (obj) => {
   const {rfid, firstName, dadSurname, momSurname, gender, birthday, outsourcedEmployee, companyEmployeeId} = obj;
+
+  switch (gender) {
+    case "M":
+      gen = "Masculino"
+      break;
+    case "F":
+      gen = "Femenino"
+      break;
+    case null:
+      gen = null
+      break;
+    default:
+      gen = null
+  }
 
   const qwery = () => {
     const Oto = `mutation{
@@ -19,7 +34,7 @@ const addEmployee = (obj) => {
           companyEmployeeId: "${companyEmployeeId}",
           gender:`
 
-    const rri = (gender === null) ? null :`"${gender}"` || null;    
+    const rri = (gen === null) ? null :`"${gen}"` || null;    
 
     const no = `, birthday:`;
 
