@@ -11,7 +11,8 @@ lxterminal -e "npm run server" &
 
 cd /home/pi/Documents/totemp_ter/temp-rfid-ternium
 # lxterminal -e "npm run start" &
-lxterminal -e "serve -s build -l 3000" &
+# lxterminal -e "serve -s build -l 3000" &
+lxterminal -e "python3 -m http.server 3000" &
 
 sleep 5
 chromium-browser --check-for-update-interval=1 --simulate-critical-update --kiosk --app=http://localhost:3000
@@ -22,6 +23,6 @@ chromium-browser --check-for-update-interval=1 --simulate-critical-update --kios
 # to autorun file on start 
 # cd /etc/xdg/lxsession/LXDE-pi/
 # sudo nano autostart
-# @/home/pi/Documents/totemp_ter/temp-rfid-ternium/start.sh
+# @/home/pi/Documents/totemp_ter/temp_rfid_ternium/start.sh
 # CTRL O , ENTER
 # CTRL X
