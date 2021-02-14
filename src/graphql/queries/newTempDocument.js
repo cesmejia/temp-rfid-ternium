@@ -31,19 +31,6 @@ const newTempDocument  = (obj) => {
             }
         }).catch( e=>{
             reject(e);
-            console.log(`
-            mutation{
-                newTempDocument(input:{ 
-                    temperature: ${temperature},
-                    companyId: "${companyId}",
-                    companyName: "${companyName}",
-                    rfid: "${rfid}",
-                    employeeId: ${employeeId}
-                }){
-                    rfid
-                }
-            }`)
-
         })
     });
 }

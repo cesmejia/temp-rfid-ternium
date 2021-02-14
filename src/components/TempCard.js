@@ -1,6 +1,8 @@
 import React from 'react'
 import { Grid, Paper } from '@material-ui/core';
 import Text from "./TemperatureText";
+import variables from "../fakeEnv.json";
+const companyName = process.env.COMPANY_NAME || variables.COMPANY_NAME;
 
 const TempCard = ({data, message}) => {
  
@@ -18,15 +20,11 @@ let status = <h1 style={{textAlign:"center", fontSize:"4vw", margin:0}}>{message
           bkc = '#e41414';
           status = <Text temp={temp} />;
       }
-      // else if( key ){
-      //     bkc = "#000000";
-      //     status = <Text />;
-      // }
     }
 
     return (
       <>
-        <div style={{position: "absolute", right: 14,	padding: "6vh 6vw", fontWeight:"bolder", fontSize:28, opacity:0.35, color:"white" }}>TERNIUM</div>
+        <div style={{position: "absolute", right: 14,	padding: "6vh 6vw", fontWeight:"bolder", fontSize:28, opacity:0.35, color:"white" }}>{companyName.toUpperCase()}</div>
         <Grid item xs={12} style={{textAlign:"start", padding:6, height:"80vh"}}>
           <Paper style={{ height:"100%", backgroundColor: bkc, color:"white", justifyContent: "center", display: "flex", alignItems: "center", padding:25 }}>
             {status}

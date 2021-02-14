@@ -14,8 +14,10 @@ cd /home/pi/Documents/totemp_ter/temp-rfid-ternium
 # lxterminal -e "serve -s build -l 3000" &
 lxterminal -e "python3 -m http.server 3000" &
 
+#chromium-browser --kiosk --app=http://localhost:3000
 sleep 5
-chromium-browser --check-for-update-interval=1 --simulate-critical-update --kiosk --app=http://localhost:3000
+chromium-browser --disable-restore-session-state --disable-features=TranslateUI --disable-session-crashed-bubble --check-for-update-interval=1 --simulate-critical-update --kiosk --app=http://localhost:3000 @unclutter -idle 0
+
 
 # When Installing or updating, give this file permissions on (Copy & paste on Terminal) with:
 # chmod a+rx start.sh
